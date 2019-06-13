@@ -1,6 +1,10 @@
 # from flask import Flask
 from flask import Flask, request, render_template
+import os
+
 app = Flask(__name__)
+
+port = int(os.getenv('PORT', 6000))
 
 @app.route('/')
 def my_form():
@@ -16,4 +20,4 @@ def hello_world():
   return 'Hello, World!\n This looks just amazing within 5 minutes'
 
 if __name__ == '__main__':
-  app.run()
+  app.run(host='127.0.0.1', port=port,debug=True)
