@@ -6,6 +6,7 @@ import pandas as pd
 import time
 import redis
 import _pickle as cPickle
+import random
 
 
 app = Flask(__name__)
@@ -40,6 +41,62 @@ def cachecheck():
         con.close()
         r.set(cacheName, cPickle.dumps(rows))
     return render_template('results.html', data=rows, time=end_time, isCache=isCache)
+
+@app.route('/randomcache')
+def randomcache():
+    cacheName = 'anushreeazure'
+
+    if r.exists(cacheName):
+        isCache = 'with Cache'
+        start_time = time.time()
+        rows = cPickle.loads(r.get(cacheName))
+        end_time = time.time()-start_time
+        r.delete(cacheName)
+    else:
+        isCache = 'without Cache'
+        start_time = time.time()
+        con = sql.connect("database.db")
+        cur = con.cursor()
+
+        for i in range(1000):
+            mag1 = str(random.uniform(1, 8))
+            mag2 = str(random.uniform(1, 8))
+            cur.execute("select * from Earthquake where mag between "+mag1+ " and " +mag2)
+            rows = cur.fetchall();
+
+        end_time = time.time() - start_time
+        con.close()
+        r.set(cacheName, cPickle.dumps(rows))
+    return render_template('results.html', data=rows, time=end_time, isCache=isCache)
+
+
+@app.route('/randomrange')
+def randomrange():
+
+    for i in range(100):
+        if r.exists(str(i)):
+            isCache = 'with Cache'
+            start_time = time.time()
+            rows = cPickle.loads(r.get(str(i)))
+            end_time = time.time() - start_time
+            r.delete(str(i))
+        else:
+            isCache = 'without Cache'
+            start_time = time.time()
+            con = sql.connect("database.db")
+            cur = con.cursor()
+            mag1 = str(random.uniform(1, 8))
+            mag2 = str(random.uniform(1, 8))
+            cur.execute("select * from Earthquake where mag between " + mag1 + " and " + mag2)
+            rows = cur.fetchall();
+            end_time = time.time() - start_time
+            con.close()
+            r.set(str(i), cPickle.dumps(rows))
+        return render_template('results.html', data=rows, time=end_time, isCache=isCache)
+
+
+
+
 
 
 # r.set('anu','kasal')
