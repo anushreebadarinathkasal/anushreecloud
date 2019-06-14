@@ -4,10 +4,47 @@ import os
 import sqlite3 as sql
 import pandas as pd
 import time
+import redis
+import _pickle as cPickle
+
 
 app = Flask(__name__)
 
 port = int(os.getenv('PORT', 6000))
+
+
+myHostname = "anushreeazure.redis.cache.windows.net"
+myPassword = "Iq4h8ZDl7kigFTOkH0njINd9LmUAfZFawLjJkB3Gnqw="
+
+r = redis.StrictRedis(host=myHostname,port=6380, db=0, password=myPassword, ssl=True)
+
+
+@app.route('/cachecheck')
+def cachecheck():
+    cacheName = 'anushreeazure'
+
+    if r.exists(cacheName):
+        isCache = 'with Cache'
+        start_time = time.time()
+        rows = cPickle.loads(r.get(cacheName))
+        end_time = time.time()-start_time
+        r.delete(cacheName)
+    else:
+        isCache = 'without Cache'
+        start_time = time.time()
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute("select * from Earthquake")
+        rows = cur.fetchall();
+        end_time = time.time() - start_time
+        con.close()
+        r.set(cacheName, cPickle.dumps(rows))
+    return render_template('results.html', data=rows, time=end_time, isCache=isCache)
+
+
+# r.set('anu','kasal')
+# text=r.get('anu')
+# print(text)
 
 # @app.route('/')
 # def my_form():

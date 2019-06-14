@@ -11,10 +11,13 @@
 
 
       <table border = 1>
-       <p>time:</p>  {{ time }}
-         {% for row in rows %}
+       <tr>{{ time }}</tr><br>
+       <tr>{{ isCache }}</tr><br>
+         {% for row in data %}
          <tr>
         {{row}}
+
+
 		<br>
          </tr>
          {% endfor %}
