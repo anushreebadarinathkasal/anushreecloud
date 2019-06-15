@@ -72,27 +72,35 @@ def randomcache():
 
 @app.route('/randomrange')
 def randomrange():
-
+    j = 0
+    start_time = time.time()
     for i in range(100):
-        if r.exists(str(i)):
+        mag = "{:.2f}".format(random.uniform(1, 8))
+        if r.exists(mag):
             isCache = 'with Cache'
-            start_time = time.time()
-            rows = cPickle.loads(r.get(str(i)))
-            end_time = time.time() - start_time
-            r.delete(str(i))
+            print(isCache,mag)
+
+            rows = cPickle.loads(r.get(mag))
+            # end_time = time.time() - start_time
+            # r.delete(mag)
         else:
+
             isCache = 'without Cache'
-            start_time = time.time()
+            #start_time = time.time()
             con = sql.connect("database.db")
             cur = con.cursor()
             mag1 = str(random.uniform(1, 8))
             mag2 = str(random.uniform(1, 8))
+            print(isCache, mag1, mag2)
             cur.execute("select * from Earthquake where mag between " + mag1 + " and " + mag2)
             rows = cur.fetchall();
-            end_time = time.time() - start_time
+
             con.close()
-            r.set(str(i), cPickle.dumps(rows))
-        return render_template('results.html', data=rows, time=end_time, isCache=isCache)
+            r.set(mag, cPickle.dumps(rows))
+        j = j+1
+        end_time = time.time() - start_time
+    print(j)
+    return render_template('results.html', data=rows, time=end_time, isCache=isCache)
 
 
 
