@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+   <body>
+    <h1>Anushree Badarinath Kasal</h1>
+        <h1>1001624311</h1>
+<h2> <a href = "/">Home</a> </h2>
+      <header> <h1> This page lists the Earthquake records </h1>
+      </header>
+      <br> <br>
+
+
+      <table border = 1>
+    <tr><td>time:</td><td>{{ time }}</td></tr>
+      <tr><td>count:</td><td>{{ count }}</td></tr>
+         {% for row in rows %}
+         <tr>
+        {{row}}
+		<br>
+         </tr>
+         {% endfor %}
+      </table>
+
+      <br>
+
+   </body>
+</html>

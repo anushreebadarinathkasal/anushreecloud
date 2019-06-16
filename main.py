@@ -8,7 +8,6 @@ import redis
 import _pickle as cPickle
 import random
 
-
 app = Flask(__name__)
 
 port = int(os.getenv('PORT', 7000))
@@ -18,6 +17,51 @@ myHostname = "anushreeazure.redis.cache.windows.net"
 myPassword = "Iq4h8ZDl7kigFTOkH0njINd9LmUAfZFawLjJkB3Gnqw="
 
 r = redis.StrictRedis(host=myHostname,port=6380, db=0, password=myPassword, ssl=True)
+
+
+@app.route('/question6')
+def question6():
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute("select distinct net from Earthquake where net like 'n%'")
+    rows = cur.fetchall()
+    start_time = time.time()
+    for i in range(100):
+        print(len(rows))
+        val = random.randint(0, len(rows)-1)
+        str1 = str(rows[val])
+        cur = con.cursor()
+        sqlquery= "select * from Earthquake where net='"+str1[2:4]+"'"
+        print(sqlquery)
+        cur.execute(sqlquery)
+        rows1 = cur.fetchall();
+        r.set(sqlquery, cPickle.dumps(rows1))
+    end_time=time.time()-start_time
+    con.close()
+    return render_template("list1.html",data=rows1, time=end_time,count=len(rows1))
+
+@app.route('/question7')
+def question7():
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute("select distinct net from Earthquake where net like 'n%'")
+    rows = cur.fetchall()
+    start_time = time.time()
+    for i in range(100):
+        print(len(rows))
+        val = random.randint(0, len(rows)-1)
+        str1 = str(rows[val])
+        cur = con.cursor()
+        sqlquery= "select * from Earthquake where net='"+str1[2:4]+"'"
+        print(sqlquery)
+        cur.execute(sqlquery)
+        rows1 = cur.fetchall();
+        if(r.get(sqlquery)):
+             print("cached data")
+    end_time=time.time()-start_time
+    con.close()
+    return render_template("list1.html",data=rows1, time=end_time,count=len(rows1))
+
 
 
 @app.route('/cachecheck')
@@ -156,7 +200,7 @@ def list():
     start_time = time.time()
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select * from quakes")
+    cur.execute("select * from Earthquake")
     rows = cur.fetchall();
     end_time=time.time()-start_time
     con.close()
