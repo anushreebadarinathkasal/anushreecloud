@@ -38,7 +38,7 @@ def question6():
         r.set(sqlquery, cPickle.dumps(rows1))
     end_time=time.time()-start_time
     con.close()
-    return render_template("list1.html",data=rows1, time=end_time,count=len(rows1))
+    return render_template("list1.html",data=rows1, time=end_time)
 
 @app.route('/question7')
 def question7():
@@ -51,16 +51,12 @@ def question7():
         print(len(rows))
         val = random.randint(0, len(rows)-1)
         str1 = str(rows[val])
-        cur = con.cursor()
         sqlquery= "select * from Earthquake where net='"+str1[2:4]+"'"
-        print(sqlquery)
-        cur.execute(sqlquery)
-        rows1 = cur.fetchall();
         if(r.get(sqlquery)):
              print("cached data")
     end_time=time.time()-start_time
     con.close()
-    return render_template("list1.html",data=rows1, time=end_time,count=len(rows1))
+    return render_template("list1.html", time=end_time)
 
 
 
