@@ -182,6 +182,7 @@ def delete():
     con = sql.connect("database.db")
     cur = con.cursor()
     cur.execute("delete from quakes  where rms <=0.25")
+    con.commit()
     con.close()
     return render_template("list.html")
 
