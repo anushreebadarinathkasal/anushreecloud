@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+   <body>
+       <header> <h1> This page lists the Clusters of the given records </h1>
+      </header>
+      <br> <br>
+
+      <table border = 1>
+      <h2>Number of clusters centroid locations</h2>
+	  <tr>
+		<th>Fare</th>
+		<th>Age</th>
+      </tr>
+      {% for row in centroids[0] %}
+      <tr>
+		<td> {{row[0]}}</td>
+        <td> {{row[1]}}</td>
+         </tr>
+         {% endfor %}
+		</table> 
+	   <h2> Total number of points in cluster </h2>	 
+	  {% for row in centroids[1] %}
+         <tr>
+        {{row}}
+		<br>
+         </tr>
+         {% endfor %} 
+		 
+	    <h2> Distances from each centroid </h2>
+	   {% for row in centroids[2] %}
+         <tr>
+        {{row}}
+		<br>
+         </tr>
+    	{% endfor %} 
+        		 
+		 <h2> Clusters</h2>	 
+		 <img src="{{url_for('static',filename='img.png')}}"><br>
+		 <h2> Elbow Method</h2>
+         <img src="{{url_for('static',filename='img1.png')}}">
+		 
+		 <h2>Max Clusters</h2>	 
+		 <img src="static/"{{centroids[3]}}><br>
+
+
+      <br>
+      <h2> <a href = "/">Home</a> </h2>
+   </body>
+</html>

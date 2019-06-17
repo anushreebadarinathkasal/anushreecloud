@@ -7,6 +7,12 @@ import time
 import redis
 import _pickle as cPickle
 import random
+import matplotlib
+from matplotlib import pyplot as plt
+# from matplotlib import *
+from sklearn.cluster import KMeans
+from scipy.spatial import distance
+from numpy import sin, cos, arctan2, sqrt, cross, pi, radians
 
 app = Flask(__name__)
 
@@ -146,6 +152,61 @@ def randomrange():
     return render_template('results.html', data=rows, time=end_time, isCache=isCache, cc= countCache, cc1=countwithoutCache )
 
 
+@app.route('/clustering')
+def clustering():
+    query = "SELECT latitude,longitude FROM Earthquake "
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute(query)
+    rows = cur.fetchall()
+    y = pd.DataFrame(rows)
+    k = KMeans(n_clusters=5,random_state=0).fit(y)
+    X = y.dropna()
+    fig = plt.figure()
+    c = k.cluster_centers_
+    l = k.labels_
+    # plt.scatter(X[0],X[1])
+    plt.scatter(X[0], X[1], c = l)
+    plt.scatter(c[:, 0], c[:, 1], c='y', s=100, marker='x')
+    plt.title('Clusters based on latitude and longitude')
+    plt.xlabel('latitude')
+    plt.ylabel('longitude')
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html",data=plot.decode('utf8'))
+
+
+def convert_fig_to_html(fig):
+    from io import BytesIO
+    figfile = BytesIO()
+    plt.savefig(figfile, format='png')
+    figfile.seek(0)  # rewind to beginning of file
+    import base64
+    #figdata_png = base64.b64encode(figfile.read())
+    figdata_png = base64.b64encode(figfile.getvalue())
+    return figdata_png
+
+
+@app.route('/clusteringtrial')
+def clusteringtrial():
+    query = "SELECT latitude,longitude FROM Earthquake "
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute(query)
+    rows = cur.fetchall()
+    y = pd.DataFrame(rows)
+    k = KMeans(n_clusters=5, random_state=0).fit(y)
+    centroids = k.cluster_centers_
+    X = y.dropna()
+    print(X[0])
+    fig = plt.figure()
+    plt.scatter(X[0], X[1])
+    plt.scatter(centroids[:,0],centroids[:,1],color='black')
+    # print(X[:,0])
+    #display popup
+    plt.show()
+    fig.savefig('static/img.png')
+    # print(k.cluster_centers_)
+    return render_template("clus.html", data=rows, kmeansCentroid = centroids)
 
 
 
