@@ -52,16 +52,18 @@ r = redis.StrictRedis(host=myHostname,port=6380, db=0, password=myPassword, ssl=
 def question6():
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select distinct net from Earthquake where net like 'n%'")
+    lat1 = int(request.form['lat1'])
+    lat2 = int(request.form['lat2'])
+    cur.execute("select * from Earthquake where mag between " + str(lat1) + " and " + str(lat2))
     var = int(request.form['count'])
     rows = cur.fetchall()
     start_time = time.time()
     for i in range(var):
-        print(len(rows))
         val = random.randint(0, len(rows)-1)
         str1 = str(rows[val])
         cur = con.cursor()
-        sqlquery= "select * from Earthquake where net='"+str1[2:4]+"'"
+        # sqlquery= "select * from Earthquake where net='"+str1[2:4]+"'"
+        sqlquery = "select * from Earthquake where mag between " + str(lat1) + " and " + str(lat2)
         print(sqlquery)
         cur.execute(sqlquery)
         rows1 = cur.fetchall();
@@ -75,9 +77,10 @@ def question6():
 def question7():
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select distinct net from Earthquake where net like 'n%'")
+    cur.execute("select * from quakes where latitude between " + str(lat1) + " and " + str(lat2))
     rows = cur.fetchall()
     start_time = time.time()
+
     for i in range(100):
         print(len(rows))
         val = random.randint(0, len(rows)-1)
