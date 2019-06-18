@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="496931f0-4f12-45b8-991c-54670d7e293d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/results.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/results.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="203" selection-start-line="203" selection-end-line="204" />
+            <state relative-caret-position="272">
+              <caret line="212" selection-start-line="212" selection-end-line="213" />
               <folding>
                 <element signature="e#26#75#0" expanded="true" />
               </folding>
@@ -268,7 +264,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560395610162</updated>
       <workItem from="1560395612773" duration="671000" />
-      <workItem from="1560396550709" duration="68165000" />
+      <workItem from="1560396550709" duration="68869000" />
     </task>
     <task id="LOCAL-00001" summary="fourth commit">
       <created>1560397163187</created>
@@ -281,11 +277,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68836000" />
+    <option name="totallyTimeSpent" value="69540000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2261745" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -302,7 +297,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.29036826" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.15864022" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -450,8 +445,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="203" selection-start-line="203" selection-end-line="204" />
+        <state relative-caret-position="272">
+          <caret line="212" selection-start-line="212" selection-end-line="213" />
           <folding>
             <element signature="e#26#75#0" expanded="true" />
           </folding>

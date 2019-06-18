@@ -205,7 +205,7 @@ def randomranges():
     start_t = time.time()
     for i in range(100):
         val = val + 0.001
-        cache_name = 'result' + str(val)
+        cache_name = 'result' + str(i)
         query = "select * from Earthquake where mag>='"+str(val)+"'"
         if r.get(cache_name):
             t = "with cache"
