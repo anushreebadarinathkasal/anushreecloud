@@ -414,10 +414,57 @@ def addrec():
         con = sql.connect("database.db")
         csv = request.files['myfile']
         file = pd.read_csv(csv)
-        file.to_sql('Earthquake', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
+        file.to_sql('quake3', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
                     dtype=None)
         con.close()
         return render_template("result.html", msg="Record inserted successfully")
+
+
+
+@app.route('/latlat',methods=['POST', 'GET'])
+def latlat():
+    j = 0
+    countCache = 0
+    countwithoutCache = 0
+    withcachetime = 0
+    withoutcachetime = 0
+    latstart = float(request.form['lat1'])
+    latend = float(request.form['lat2'])
+    count = int(request.form['count'])
+    lat1 = round(random.uniform(latstart, latend), 2)
+    lat2 = round(random.uniform(latstart, latend), 2)
+    cache_name = 'result'+str(lat1)+str(lat2)+str(count)
+    for i in range(count):
+        if r.exists(cache_name):
+            isCache = 'with Cache'
+            countCache += 1
+            start_time = time.time()
+            # rows = cPickle.loads(r.get(mag))
+            r.get(cache_name)
+            end_time_withcache = time.time() - start_time
+            withcachetime += end_time_withcache
+            # r.delete(mag)
+        else:
+
+            isCache = 'without Cache'
+            countwithoutCache += 1
+            con = sql.connect("database.db")
+            cur = con.cursor()
+            start_time = time.time()
+            cur.execute("select * from quakes3 where latitude between " + str(lat1) + " and " + str(lat2))
+            # rows = cur.fetchall();
+            end_timewithoutcache = time.time() - start_time
+            withoutcachetime += end_timewithoutcache
+            con.close()
+            # r.set(mag, cPickle.dumps(rows))
+            r.set(cache_name,1)
+        j = j+1
+        print(j)
+    return render_template('results.html', time1=withcachetime/countCache, time=withoutcachetime/countwithoutCache, cc= countCache, cc1=countwithoutCache )
+
+
+
+
 
 
 @app.route('/list')
