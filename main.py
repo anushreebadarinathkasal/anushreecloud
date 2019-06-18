@@ -25,15 +25,38 @@ myPassword = "Iq4h8ZDl7kigFTOkH0njINd9LmUAfZFawLjJkB3Gnqw="
 
 r = redis.StrictRedis(host=myHostname,port=6380, db=0, password=myPassword, ssl=True)
 
+# correct
+# @app.route('/question6')
+# def question6():
+#     con = sql.connect("database.db")
+#     cur = con.cursor()
+#     cur.execute("select distinct net from Earthquake where net like 'n%'")
+#     rows = cur.fetchall()
+#     start_time = time.time()
+#     for i in range(100):
+#         print(len(rows))
+#         val = random.randint(0, len(rows)-1)
+#         str1 = str(rows[val])
+#         cur = con.cursor()
+#         sqlquery= "select * from Earthquake where net='"+str1[2:4]+"'"
+#         print(sqlquery)
+#         cur.execute(sqlquery)
+#         rows1 = cur.fetchall();
+#         r.set(sqlquery, cPickle.dumps(rows1))
+#     end_time=time.time()-start_time
+#     con.close()
+#     return render_template("list1.html",data=rows1, time=end_time)
 
-@app.route('/question6')
+
+@app.route('/question6', methods=['POST', 'GET'])
 def question6():
     con = sql.connect("database.db")
     cur = con.cursor()
     cur.execute("select distinct net from Earthquake where net like 'n%'")
+    var = int(request.form['count'])
     rows = cur.fetchall()
     start_time = time.time()
-    for i in range(100):
+    for i in range(var):
         print(len(rows))
         val = random.randint(0, len(rows)-1)
         str1 = str(rows[val])
@@ -46,6 +69,7 @@ def question6():
     end_time=time.time()-start_time
     con.close()
     return render_template("list1.html",data=rows1, time=end_time)
+
 
 @app.route('/question7')
 def question7():
