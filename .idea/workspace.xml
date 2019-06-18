@@ -28,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="212" selection-start-line="212" selection-end-line="213" />
+            <state relative-caret-position="357">
+              <caret line="223" column="39" selection-start-line="223" selection-start-column="39" selection-end-line="223" selection-end-column="39" />
               <folding>
                 <element signature="e#26#75#0" expanded="true" />
               </folding>
@@ -264,7 +264,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560395610162</updated>
       <workItem from="1560395612773" duration="671000" />
-      <workItem from="1560396550709" duration="68869000" />
+      <workItem from="1560396550709" duration="69118000" />
     </task>
     <task id="LOCAL-00001" summary="fourth commit">
       <created>1560397163187</created>
@@ -277,10 +277,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69540000" />
+    <option name="totallyTimeSpent" value="69789000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2261745" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -445,8 +446,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="212" selection-start-line="212" selection-end-line="213" />
+        <state relative-caret-position="357">
+          <caret line="223" column="39" selection-start-line="223" selection-start-column="39" selection-end-line="223" selection-end-column="39" />
           <folding>
             <element signature="e#26#75#0" expanded="true" />
           </folding>

@@ -215,13 +215,13 @@ def randomranges():
             con = sql.connect("database.db")
             cur = con.cursor()
             cur.execute(query)
-            rows = cur.fetchall()
+            # rows = cur.fetchall()
             con.close()
             # r.set(cache_name, cPickle.dumps(rows))
             r.set(cache_name, 1)
         end_t = time.time() - start_t
         print(end_t)
-    return render_template("list.html", rows=rows, time=end_t,cache= t)
+    return render_template("list.html", time=end_t,cache= t)
 
 #correct
 @app.route('/clustering')
