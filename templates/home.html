@@ -15,7 +15,7 @@
         <h2><a href = "/addnewrec">Upload new CSV</a></h2> <br>
 
 
-<form method="POST" action="{/latlat" >
+<form method="POST" action="/latlat" >
 
     Enter latitude <input type="text" name="lat1">
     Enter latitude <input type="text" name="lat2">
@@ -25,7 +25,16 @@
 
 
 
-		<h2><a href = "/list">Retrive earthquake Details</a></h2>
+		<h2>Retrive earthquake Details</h2>
+
+
+        <form method="POST" action="/list" >
+
+    Enter latitude <input type="text" name="lat1">
+    Enter latitude <input type="text" name="lat2">
+    <input type="submit" name="submit">
+    </form>
+
 		<h2><a href = "/magnitude">Magnitude </a></h2>
 		<h2><a href = "/range">Range </a></h2>
 		<h2><a href = "/location">Location </a></h2>

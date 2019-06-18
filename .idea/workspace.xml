@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="496931f0-4f12-45b8-991c-54670d7e293d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="452" selection-start-line="452" selection-end-line="452" />
+            <state relative-caret-position="159">
+              <caret line="476" column="38" selection-start-line="476" selection-start-column="38" selection-end-line="476" selection-end-column="38" />
               <folding>
                 <element signature="e#26#75#0" expanded="true" />
               </folding>
@@ -67,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/latlongin.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="11" lean-forward="true" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+            <state relative-caret-position="119">
+              <caret line="7" selection-start-line="7" selection-end-line="15" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -88,8 +89,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
+            <state relative-caret-position="187">
+              <caret line="17" selection-start-line="17" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -126,6 +127,7 @@
       <find>randomcache</find>
       <find>enternew</find>
       <find>addrec</find>
+      <find>randomrange</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -146,6 +148,7 @@
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/templates/list.html" />
         <option value="$PROJECT_DIR$/templates/results.html" />
+        <option value="$PROJECT_DIR$/templates/latlongin.html" />
         <option value="$PROJECT_DIR$/templates/home.html" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
@@ -265,7 +268,7 @@
       <option name="presentableId" value="Default" />
       <updated>1560395610162</updated>
       <workItem from="1560395612773" duration="671000" />
-      <workItem from="1560396550709" duration="78615000" />
+      <workItem from="1560396550709" duration="79616000" />
     </task>
     <task id="LOCAL-00001" summary="fourth commit">
       <created>1560397163187</created>
@@ -278,11 +281,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79286000" />
+    <option name="totallyTimeSpent" value="80287000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16375838" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -417,10 +419,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/upload.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/latlongin.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="11" lean-forward="true" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="11" />
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="7" selection-end-line="15" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -433,22 +442,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/upload.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="7" lean-forward="true" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
+        <state relative-caret-position="187">
+          <caret line="17" selection-start-line="17" selection-end-line="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="452" selection-start-line="452" selection-end-line="452" />
+        <state relative-caret-position="159">
+          <caret line="476" column="38" selection-start-line="476" selection-start-column="38" selection-end-line="476" selection-end-column="38" />
           <folding>
             <element signature="e#26#75#0" expanded="true" />
           </folding>

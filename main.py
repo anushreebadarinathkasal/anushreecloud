@@ -451,7 +451,7 @@ def latlat():
             con = sql.connect("database.db")
             cur = con.cursor()
             start_time = time.time()
-            cur.execute("select * from quakes3 where latitude between " + str(lat1) + " and " + str(lat2))
+            cur.execute("select * from quakes where latitude between " + str(lat1) + " and " + str(lat2))
             # rows = cur.fetchall();
             end_timewithoutcache = time.time() - start_time
             withoutcachetime += end_timewithoutcache
@@ -467,12 +467,14 @@ def latlat():
 
 
 
-@app.route('/list')
+@app.route('/list', methods=['POST', 'GET'] )
 def list():
     start_time = time.time()
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select * from Earthquake")
+    lat1 = float(request.form['lat1'])
+    lat2 = float(request.form['lat2'])
+    cur.execute("select time,latitude, mag, place  from quakes where latitude between " + str(lat1) + " and " + str(lat2))
     rows = cur.fetchall();
     end_time=time.time()-start_time
     con.close()
