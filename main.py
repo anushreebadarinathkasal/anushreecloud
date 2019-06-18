@@ -197,7 +197,7 @@ def randomrange():
             r.set(mag,1)
         j = j+1
         print(j)
-    return render_template('results.html',time1 =withcachetime, time=withoutcachetime, cc= countCache, cc1=countwithoutCache )
+    return render_template('results.html',time1 =withcachetime/countCache, time=withoutcachetime/countwithoutCache, cc= countCache, cc1=countwithoutCache )
 
 @app.route('/randomranges')
 def randomranges():
