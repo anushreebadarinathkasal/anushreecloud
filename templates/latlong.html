@@ -10,18 +10,20 @@
       <br> <br>
 
 <p>{{ cache }}</p>
-    <p>{{ time }}</p>
       <table border = 1>
-        <tr><td>time:</td><td>{{ time }}</td></tr>
-        <tr><td>count:</td><td>{{ count }}</td></tr>
-         {% for row in rows %}
+       <tr>{{ time }}</tr><br>
+       <tr>{{ isCache }}</tr><br>
+
+      <tr><td>with cache</td><td>{{ cc }}</td></tr><br>
+      <tr><td>without cache</td><td>{{ cc1 }}</td></tr><br>
+         {% for row in data %}
          <tr>
         {{row}}
+
+
 		<br>
          </tr>
          {% endfor %}
-      <tr><td>with cache</td><td>{{ cc }}</td></tr><br>
-      <tr><td>without cache</td><td>{{ cc1 }}</td></tr><br>
       </table>
 
       <br>

@@ -13,6 +13,7 @@ from matplotlib import pyplot as plt
 from sklearn.cluster import KMeans
 from scipy.spatial import distance
 from numpy import sin, cos, arctan2, sqrt, cross, pi, radians
+from geopy import distance
 
 app = Flask(__name__)
 
@@ -66,6 +67,8 @@ def question7():
 
 
 
+
+
 @app.route('/cachecheck')
 def cachecheck():
     cacheName = 'anushreeazure'
@@ -115,11 +118,47 @@ def randomcache():
         r.set(cacheName, cPickle.dumps(rows))
     return render_template('results.html', data=rows, time=end_time, isCache=isCache)
 
+# correct
+# @app.route('/randomrange')
+# def randomrange():
+#     j = 0
+#     start_time = time.time()
+#     countCache = 0
+#     countwithoutCache = 0
+#     for i in range(100):
+#         # mag = "{:.2f}".format(random.uniform(1, 8))
+#         mag = round(random.uniform(1,8), 2)
+#         if r.exists(mag):
+#             isCache = 'with Cache'
+#             print(isCache,mag)
+#             countCache += 1
+#             print(countCache)
+#             rows = cPickle.loads(r.get(mag))
+#             # end_time = time.time() - start_time
+#             # r.delete(mag)
+#         else:
+#
+#             isCache = 'without Cache'
+#             countwithoutCache += 1
+#             print(countwithoutCache)
+#             #start_time = time.time()
+#             con = sql.connect("database.db")
+#             cur = con.cursor()
+#             mag1 = str(random.uniform(1, 8))
+#             print(isCache, mag1)
+#             cur.execute("select * from Earthquake where mag>="+mag1)
+#             rows = cur.fetchall();
+#             con.close()
+#             r.set(mag, cPickle.dumps(rows))
+#         j = j+1
+#         end_time = time.time() - start_time
+#     print(j)
+#     return render_template('results.html', data=rows, time=end_time, isCache=isCache, cc= countCache, cc1=countwithoutCache )
+
 
 @app.route('/randomrange')
 def randomrange():
     j = 0
-    start_time = time.time()
     countCache = 0
     countwithoutCache = 0
     for i in range(100):
@@ -127,31 +166,64 @@ def randomrange():
         mag = round(random.uniform(1,8), 2)
         if r.exists(mag):
             isCache = 'with Cache'
-            print(isCache,mag)
+            print(isCache, mag)
             countCache += 1
             print(countCache)
-            rows = cPickle.loads(r.get(mag))
-            # end_time = time.time() - start_time
+            start_time = time.time()
+            # rows = cPickle.loads(r.get(mag))
+            r.get(mag)
+            end_time_withcache = time.time() - start_time
+            end_time_withcache += end_time_withcache
             # r.delete(mag)
         else:
 
             isCache = 'without Cache'
             countwithoutCache += 1
+            print(countwithoutCache)
             #start_time = time.time()
             con = sql.connect("database.db")
             cur = con.cursor()
             mag1 = str(random.uniform(1, 8))
             print(isCache, mag1)
+            start_time = time.time()
             cur.execute("select * from Earthquake where mag>="+mag1)
             rows = cur.fetchall();
+            end_timewithoutcache = time.time() - start_time
+            end_timewithoutcache += end_timewithoutcache
             con.close()
-            r.set(mag, cPickle.dumps(rows))
+            # r.set(mag, cPickle.dumps(rows))
+            r.set(mag,1)
         j = j+1
-        end_time = time.time() - start_time
+        end_timewithoutcache = time.time() - start_time
     print(j)
-    return render_template('results.html', data=rows, time=end_time, isCache=isCache, cc= countCache, cc1=countwithoutCache )
+    return render_template('results.html', data=rows,time1 =end_time_withcache, time=end_timewithoutcache, isCache=isCache, cc= countCache, cc1=countwithoutCache )
 
+@app.route('/randomranges')
+def randomranges():
+    val = 0
+    rows = []
+    start_t = time.time()
+    for i in range(100):
+        val = val + 0.001
+        cache_name = 'result' + str(val)
+        query = "select * from Earthquake where mag>='"+str(val)+"'"
+        if r.get(cache_name):
+            t = "with cache"
+            store = r.get(cache_name)
+        else:
+            t = "without cache"
+            con = sql.connect("database.db")
+            cur = con.cursor()
+            cur.execute(query)
+            rows = cur.fetchall()
+            con.close()
+            # r.set(cache_name, cPickle.dumps(rows))
+            r.set(cache_name, 1)
+        end_t = time.time() - start_t
+        print(end_t)
+    return render_template("list.html", rows=rows, time=end_t,cache= t)
 
+#correct
 @app.route('/clustering')
 def clustering():
     query = "SELECT latitude,longitude FROM Earthquake "
@@ -185,6 +257,77 @@ def convert_fig_to_html(fig):
     figdata_png = base64.b64encode(figfile.getvalue())
     return figdata_png
 
+@app.route('/latlong')
+def latlong():
+    return render_template('latlongin.html')
+
+@app.route('/latlongout', methods=['POST', 'GET'])
+def latlongout():
+    start_t = time.time()
+    lat = request.form['lat']
+    lon = request.form['lon']
+    dist = float(request.form['dist'])
+    query = "select * from Earthquake "
+    cache_name = 'result'+str(lat)+str(lon)+str(dist)
+    if r.get(cache_name):
+        results = cPickle.loads(r.get(cache_name))
+        t = 'with cache'
+    else :
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute(query)
+        rows = cur.fetchall()
+        t = 'without cache'
+        i = 0
+        results = []
+        while(i < len(rows)):
+            dest_lat = rows[i][2]
+            dest_lon = rows[i][3]
+            distan = distance.distance((lat,lon), (dest_lat,dest_lon)).km
+            if(distan<dist):
+                results.append(rows[i])
+            i = i+1
+        r.set(cache_name,cPickle.dumps(results))
+    end_t = time.time() - start_t
+    print(end_t)
+    return render_template("latlong.html",rows=results, time = end_t, cache=t)
+
+@app.route('/testin')
+def testin():
+    return render_template('place.html')
+
+@app.route('/test1',methods=['GET', 'POST'])
+def test1():
+#for i in range(100):
+    countCache = 0
+    countwithoutCache = 0
+    start_t = time.time()
+    if request.method =='POST':
+        place = request.form['place']
+        query ='SELECT * FROM Earthquake where "place" LIKE \'%' + place +'%\''
+        cache_name = 'result'+ str(place)
+        if r.get(cache_name):
+            t = "with cache"
+            print(t)
+            countCache += 1
+            print(countCache)
+            rows = cPickle.loads(r.get(cache_name))
+            #r.delete(cache)
+
+        else:
+            t = "without cache"
+            print(t)
+            countwithoutCache += 1
+            print(countwithoutCache)
+            con = sql.connect("database.db")
+            cur = con.cursor()
+            cur.execute(query)
+            rows = cur.fetchall()
+            con.close()
+            r.set(cache_name, cPickle.dumps(rows))
+        end_t = time.time() - start_t
+        print(end_t)
+    return render_template("list.html", rows=rows, time=end_t,cache= t)
 
 @app.route('/clusteringtrial')
 def clusteringtrial():
