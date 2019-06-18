@@ -52,21 +52,22 @@ r = redis.StrictRedis(host=myHostname,port=6380, db=0, password=myPassword, ssl=
 def question6():
     con = sql.connect("database.db")
     cur = con.cursor()
-    lat1 = int(request.form['lat1'])
-    lat2 = int(request.form['lat2'])
-    cur.execute("select * from Earthquake where mag between " + str(lat1) + " and " + str(lat2))
-    var = int(request.form['count'])
-    rows = cur.fetchall()
+    latstart = float(request.form['lat1'])
+    latend = float(request.form['lat2'])
+    count = int(request.form['count'])
+    lat1 = round(random.uniform(latstart, latend), 2)
+    lat2 = round(random.uniform(latstart, latend), 2)
     start_time = time.time()
-    for i in range(var):
-        val = random.randint(0, len(rows)-1)
-        str1 = str(rows[val])
-        cur = con.cursor()
-        # sqlquery= "select * from Earthquake where net='"+str1[2:4]+"'"
+    cur.execute("select * from Earthquake where mag between " + str(lat1) + " and " + str(lat2))
+    rows = cur.fetchall()
+
+    for i in range(count):
+
         sqlquery = "select * from Earthquake where mag between " + str(lat1) + " and " + str(lat2)
         print(sqlquery)
         cur.execute(sqlquery)
         rows1 = cur.fetchall();
+
         r.set(sqlquery, cPickle.dumps(rows1))
     end_time=time.time()-start_time
     con.close()
