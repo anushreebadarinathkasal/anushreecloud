@@ -161,6 +161,8 @@ def randomrange():
     j = 0
     countCache = 0
     countwithoutCache = 0
+    withcachetime = 0
+    withoutcachetime = 0
     for i in range(100):
         # mag = "{:.2f}".format(random.uniform(1, 8))
         mag = round(random.uniform(1,8), 2)
@@ -173,7 +175,7 @@ def randomrange():
             # rows = cPickle.loads(r.get(mag))
             r.get(mag)
             end_time_withcache = time.time() - start_time
-            end_time_withcache += end_time_withcache
+            withcachetime += end_time_withcache
             # r.delete(mag)
         else:
 
@@ -187,16 +189,15 @@ def randomrange():
             print(isCache, mag1)
             start_time = time.time()
             cur.execute("select * from Earthquake where mag>="+mag1)
-            rows = cur.fetchall();
+            # rows = cur.fetchall();
             end_timewithoutcache = time.time() - start_time
-            end_timewithoutcache += end_timewithoutcache
+            withoutcachetime += end_timewithoutcache
             con.close()
             # r.set(mag, cPickle.dumps(rows))
             r.set(mag,1)
         j = j+1
-        end_timewithoutcache = time.time() - start_time
-    print(j)
-    return render_template('results.html', data=rows,time1 =end_time_withcache, time=end_timewithoutcache, isCache=isCache, cc= countCache, cc1=countwithoutCache )
+        print(j)
+    return render_template('results.html',time1 =withcachetime, time=withoutcachetime, cc= countCache, cc1=countwithoutCache )
 
 @app.route('/randomranges')
 def randomranges():
