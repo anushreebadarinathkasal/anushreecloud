@@ -78,7 +78,7 @@ def question6():
 def question7():
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select * from quakes where latitude between " + str(lat1) + " and " + str(lat2))
+    # cur.execute("select * from quakes where latitude between " + str(lat1) + " and " + str(lat2))
     rows = cur.fetchall()
     start_time = time.time()
 
@@ -285,6 +285,121 @@ def convert_fig_to_html(fig):
     #figdata_png = base64.b64encode(figfile.read())
     figdata_png = base64.b64encode(figfile.getvalue())
     return figdata_png
+
+
+@app.route('/clusteringbargraph')
+def clusteringbargraph():
+    list =[]
+    for i in range(0,10,2):
+        result = []
+        query = "SELECT count(*) FROM Earthquake where mag between " + str(i) + " and " + str(i+2)
+        print(query)
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute(query)
+        rows = cur.fetchone()
+        mag_range = str(i)+ "-" +str(i+2)
+        result.append(mag_range)
+        result.append(rows[0])
+        list.append(result)
+    y = pd.DataFrame(list)
+    X = y.dropna()
+    fig = plt.figure()
+    plt.bar(X[0],X[1])
+    plt.title('Clusters based on NumberOfEarthquakes and magnitude')
+    plt.xlabel('magnitude')
+    plt.ylabel('NumberOfEarthquakes')
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html",data=plot.decode('utf8'))
+
+@app.route('/barhorizontalgraph')
+def barhorizontalgraph():
+    list =[]
+    for i in range(0,10,2):
+        result = []
+        query = "SELECT count(*) FROM Earthquake where mag between " + str(i) + " and " + str(i+2)
+        print(query)
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute(query)
+        rows = cur.fetchone()
+        mag_range = str(i)+ "-" +str(i+2)
+        result.append(mag_range)
+        result.append(rows[0])
+        list.append(result)
+    y = pd.DataFrame(list)
+    X = y.dropna()
+    fig = plt.figure()
+    plt.bar(X[1],X[0])
+    plt.title('Clusters based on NumberOfEarthquakes and magnitude')
+    plt.xlabel('NumberOfEarthquakes')
+    plt.ylabel('magnitude')
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html",data=plot.decode('utf8'))
+
+
+@app.route('/clusteringpiegraph')
+def clusteringpiegraph():
+    list =[]
+    lables = []
+    result = []
+    for i in range(0,10,2):
+        query = "SELECT count(*) FROM Earthquake where mag between " + str(i) + " and " + str(i+2)
+        print(query)
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute(query)
+        rows = cur.fetchone()
+        mag_range = str(i)+ "-" +str(i+2)
+        lables.append(mag_range)
+        # result.append(mag_range)
+        result.append(rows[0])
+            # fig = plt.figure()
+            # plt.pie(result, labels=lables)
+            # plt.show()
+        # list.append(result)
+    # y = pd.DataFrame(list)
+    # X = y.dropna()
+    print(len(lables),len(result))
+    fig = plt.figure()
+    plt.pie(result,labels=lables)
+    plt.title('Clusters based on NumberOfEarthquakes and magnitude')
+    plt.xlabel('magnitude')
+    plt.ylabel('NumberOfEarthquakes')
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html",data=plot.decode('utf8'))
+
+
+@app.route('/clusteringhistgraph')
+def clusteringhistgraph():
+    res = []
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute("select mag from Earthquake")
+    rows = cur.fetchall()
+    row = pd.DataFrame(rows)
+    row = row.dropna()
+    fig = plt.figure()
+    plt.hist(row[0], bins=5)
+    plt.title('Based on mag range')
+    plt.xlabel('mag range')
+    plt.ylabel('frequency')
+    plot = convert_fig_to_html(fig)
+    print(res)
+    return render_template('hist.html', data1=plot.decode('utf8'))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/latlong')
 def latlong():
