@@ -316,13 +316,46 @@ def convert_fig_to_html(fig):
     figdata_png = base64.b64encode(figfile.getvalue())
     return figdata_png
 
+#
+# @app.route('/clusteringbargraph')
+# def clusteringbargraph():
+#     list =[]
+#     for i in range(0,10,2):
+#         result = []
+#         query = "SELECT count(*) FROM Earthquake where mag between " + str(i) + " and " + str(i+2)
+#         print(query)
+#         con = sql.connect("database.db")
+#         cur = con.cursor()
+#         cur.execute(query)
+#         rows = cur.fetchone()
+#         mag_range = str(i)+ "-" +str(i+2)
+#         result.append(mag_range)
+#         result.append(rows[0])
+#         list.append(result)
+#     y = pd.DataFrame(list)
+#     X = y.dropna()
+#     fig = plt.figure()
+#     # display the values on top of graph
+#     for i,v in enumerate(X[1]):
+#         plt.text(i, v, str(v), color='blue', fontweight='bold', horizontalalignment='center')
+#     # display the legend
+#     color =['red','green','gold','blue','black']
+#     for i in range(len(X[0])):
+#         plt.bar(X[0][i], X[1][i], color=color[i], width=0.2, align='center', label=X[0][i])
+#     plt.legend()
+#     # plt.bar(X[0],X[1])
+#     plt.title('Clusters based on NumberOfEarthquakes and magnitude')
+#     plt.xlabel('magnitude')
+#     plt.ylabel('NumberOfEarthquakes')
+#     plot = convert_fig_to_html(fig)
+#     return render_template("clus.html",data=plot.decode('utf8'))
 
-@app.route('/clusteringbargraph')
+@app.route('/clusteringbargraph', methods=['POST', 'GET'])
 def clusteringbargraph():
     list =[]
-    for i in range(0,10,2):
+    for i in range(1,10,1000):
         result = []
-        query = "SELECT count(*) FROM Earthquake where mag between " + str(i) + " and " + str(i+2)
+        query = "SELECT count(*) FROM voting where Registered between " + str(i) + " and " + str(i+2)
         print(query)
         con = sql.connect("database.db")
         cur = con.cursor()
@@ -344,7 +377,7 @@ def clusteringbargraph():
         plt.bar(X[0][i], X[1][i], color=color[i], width=0.2, align='center', label=X[0][i])
     plt.legend()
     # plt.bar(X[0],X[1])
-    plt.title('Clusters based on NumberOfEarthquakes and magnitude')
+    plt.title('Clusters voting')
     plt.xlabel('magnitude')
     plt.ylabel('NumberOfEarthquakes')
     plot = convert_fig_to_html(fig)
@@ -386,19 +419,20 @@ def barhorizontalgraph():
     return render_template("clus.html",data=plot.decode('utf8'))
 
 
-@app.route('/clusteringpiegraph')
+@app.route('/clusteringpiegraph',methods=['POST', 'GET'])
 def clusteringpiegraph():
     list =[]
     lables = []
     result = []
-    for i in range(0,10,2):
-        query = "SELECT count(*) FROM Earthquake where mag between " + str(i) + " and " + str(i+2)
+    totalpop1 = int(request.form['totalpop'])
+    for i in range(totalpop1,30000, 20*1000):
+        query = "SELECT count(*) FROM voting where TotalPop between " + str(totalpop1*100) + " and " + str(totalpop1*100+2000)
         print(query)
         con = sql.connect("database.db")
         cur = con.cursor()
         cur.execute(query)
         rows = cur.fetchone()
-        mag_range = str(i)+ "-" +str(i+2)
+        mag_range = str(totalpop1*100)+ "-" +str(totalpop1*100+2000)
         lables.append(mag_range)
         # result.append(mag_range)
         result.append(rows[0])
@@ -412,7 +446,7 @@ def clusteringpiegraph():
     fig = plt.figure()
     plt.pie(result,labels=lables, autopct='%1.0f%%')
     plt.legend()
-    plt.title('Clusters based on NumberOfEarthquakes and magnitude')
+    plt.title('Clusters')
     plot = convert_fig_to_html(fig)
     return render_template("clus.html",data=plot.decode('utf8'))
 
@@ -441,15 +475,14 @@ def clusteringhistgraph():
     res = []
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select mag from Earthquake")
+    cur.execute("select distinct StateName from voting")
     rows = cur.fetchall()
     row = pd.DataFrame(rows)
     row = row.dropna()
     fig = plt.figure()
-    plt.hist(row[0], bins=5)
-    plt.title('Based on mag range')
-    plt.xlabel('mag range')
-    plt.ylabel('frequency')
+    plt.hist(row[0], bins=52)
+    plt.xlabel('states')
+    plt.ylabel('no in millions')
     plot = convert_fig_to_html(fig)
     print(res)
     return render_template('hist.html', data1=plot.decode('utf8'))
@@ -611,20 +644,20 @@ def retrieve():
     tot1 = int(request.form['tot1']) * 1000
     print(tot1)
     tot2 = int(request.form['tot2']) * 1000
-    tot3 = int(request.form['tot3']) * 1000
-    tot4 = int(request.form['tot4']) * 1000
+    # tot3 = int(request.form['tot3']) * 1000
+    # tot4 = int(request.form['tot4']) * 1000
     cur.execute("select * from voting where TotalPop between " + str(tot1) + " and " + str(tot2))
     # + " and TotalPop between " + str(tot3) + " and " + str(tot4))
     # cur.execute("select * from voting where TotalPop >= " + str(tot1) + " and <= " + str(tot2) + " and TotalPop >= " + str(tot3) + " and <= " + str(tot4))
     rows = cur.fetchall();
     print(rows)
-    cur.execute("select * from voting where TotalPop between " + str(tot3) + " and " + str(tot4))
+    # cur.execute("select * from voting where TotalPop between " + str(tot3) + " and " + str(tot4))
     # + " and TotalPop between " + str(tot3) + " and " + str(tot4))
     # cur.execute("select * from voting where TotalPop >= " + str(tot1) + " and <= " + str(tot2) + " and TotalPop >= " + str(tot3) + " and <= " + str(tot4))
-    rows1 = cur.fetchall();
-    print(rows1)
+    # rows1 = cur.fetchall();
+    # print(rows1)
     con.close()
-    return render_template("list.html", rows=rows, rows1=rows1)
+    return render_template("list.html", rows=rows)
 
 
 
