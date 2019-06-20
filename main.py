@@ -3,6 +3,7 @@ from flask import Flask, request, render_template
 import os
 import sqlite3 as sql
 import pandas as pd
+import numpy as np
 import time
 import redis
 import _pickle as cPickle
@@ -305,7 +306,15 @@ def clusteringbargraph():
     y = pd.DataFrame(list)
     X = y.dropna()
     fig = plt.figure()
-    plt.bar(X[0],X[1])
+    # display the values on top of graph
+    for i,v in enumerate(X[1]):
+        plt.text(i, v, str(v), color='blue', fontweight='bold', horizontalalignment='center')
+    # display the legend
+    color =['red','green','gold','blue','black']
+    for i in range(len(X[0])):
+        plt.bar(X[0][i], X[1][i], color=color[i], width=0.2, align='center', label=X[0][i])
+    plt.legend()
+    # plt.bar(X[0],X[1])
     plt.title('Clusters based on NumberOfEarthquakes and magnitude')
     plt.xlabel('magnitude')
     plt.ylabel('NumberOfEarthquakes')
@@ -330,10 +339,19 @@ def barhorizontalgraph():
     y = pd.DataFrame(list)
     X = y.dropna()
     fig = plt.figure()
-    plt.bar(X[1],X[0])
+    for i, v in enumerate(X[1]):
+        plt.text(v + 3, i + .25, str(v), color='blue', fontweight='bold')
+
+    color = ['red', 'green', 'gold', 'blue', 'black']
+    for i in range(len(X[0])):
+        plt.bar(X[0][i], X[1][i], color=color[i], width=0.2, align='center', label=X[0][i])
+    plt.legend()
+    # plt.barh(X[0],X[1], color =["red","green","blue","yellow"])
     plt.title('Clusters based on NumberOfEarthquakes and magnitude')
-    plt.xlabel('NumberOfEarthquakes')
-    plt.ylabel('magnitude')
+    # plt.yticks(np.arange(0, 10, step=1))
+    plt.xlabel('magnitude')
+    plt.ylabel('NumberOfEarthquakes')
+    # plt.xlim(0,10000)
     plot = convert_fig_to_html(fig)
     return render_template("clus.html",data=plot.decode('utf8'))
 
@@ -362,10 +380,28 @@ def clusteringpiegraph():
     # X = y.dropna()
     print(len(lables),len(result))
     fig = plt.figure()
-    plt.pie(result,labels=lables)
+    plt.pie(result,labels=lables, autopct='%1.0f%%')
+    plt.legend()
     plt.title('Clusters based on NumberOfEarthquakes and magnitude')
-    plt.xlabel('magnitude')
-    plt.ylabel('NumberOfEarthquakes')
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html",data=plot.decode('utf8'))
+
+@app.route('/linegraph')
+def linegraph():
+    query = "SELECT latitude,longitude FROM Earthquake "
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute(query)
+    rows = cur.fetchall()
+    y = pd.DataFrame(rows)
+    X = y.dropna()
+    fig = plt.figure()
+    # plt.scatter(X[0],X[1])
+    plt.plot(X[0], X[1],marker ='o',markeredgecolor='red', color='purple')
+    # X.plot(X[0], X[1],style='o')
+    plt.title('Clusters based on latitude and longitude')
+    plt.xlabel('latitude')
+    plt.ylabel('longitude')
     plot = convert_fig_to_html(fig)
     return render_template("clus.html",data=plot.decode('utf8'))
 

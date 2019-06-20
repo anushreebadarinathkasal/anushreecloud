@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="496931f0-4f12-45b8-991c-54670d7e293d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/clus.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/clus.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,11 +53,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/clus.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="10" lean-forward="true" selection-end-line="16" selection-end-column="7" />
+            <state relative-caret-position="187">
+              <caret line="11" column="14" lean-forward="true" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+              <folding>
+                <element signature="n#src#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,7 +79,7 @@
         <entry file="file://$PROJECT_DIR$/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="272">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <caret line="16" column="62" lean-forward="true" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -99,11 +102,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="332" column="22" lean-forward="true" selection-start-line="332" selection-start-column="22" selection-end-line="332" selection-end-column="22" />
+            <state relative-caret-position="-2204">
+              <caret line="343" lean-forward="true" selection-start-line="343" selection-end-line="343" />
               <folding>
                 <element signature="e#26#75#0" expanded="true" />
               </folding>
@@ -128,6 +131,8 @@
       <find>randomrange</find>
       <find>betwee</find>
       <find>pop</find>
+      <find>clus</find>
+      <find>pie</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -142,7 +147,6 @@
         <option value="$PROJECT_DIR$/templates/upload1.html" />
         <option value="$PROJECT_DIR$/templates/uploads.html" />
         <option value="$PROJECT_DIR$/templates/list1.html" />
-        <option value="$PROJECT_DIR$/templates/clus.html" />
         <option value="$PROJECT_DIR$/templates/place.html" />
         <option value="$PROJECT_DIR$/templates/latlong.html" />
         <option value="$PROJECT_DIR$/requirements.txt" />
@@ -153,6 +157,7 @@
         <option value="$PROJECT_DIR$/templates/hist" />
         <option value="$PROJECT_DIR$/templates/hist.html" />
         <option value="$PROJECT_DIR$/templates/home.html" />
+        <option value="$PROJECT_DIR$/templates/clus.html" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -272,7 +277,7 @@
       <updated>1560395610162</updated>
       <workItem from="1560395612773" duration="671000" />
       <workItem from="1560396550709" duration="94565000" />
-      <workItem from="1560979773052" duration="1895000" />
+      <workItem from="1560979773052" duration="10076000" />
     </task>
     <task id="LOCAL-00001" summary="fourth commit">
       <created>1560397163187</created>
@@ -285,13 +290,12 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97131000" />
+    <option name="totallyTimeSpent" value="105312000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16577181" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16577181" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="DB Browser" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -306,7 +310,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="DB Execution Console" order="9" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.28895184" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.28895184" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -421,13 +425,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/hist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -442,27 +439,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/home.html">
+    <entry file="file://$PROJECT_DIR$/templates/hist.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="204">
+          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="332" column="22" lean-forward="true" selection-start-line="332" selection-start-column="22" selection-end-line="332" selection-end-column="22" />
-          <folding>
-            <element signature="e#26#75#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="272">
+          <caret line="16" column="62" lean-forward="true" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/clus.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="10" lean-forward="true" selection-end-line="16" selection-end-column="7" />
+        <state relative-caret-position="187">
+          <caret line="11" column="14" lean-forward="true" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="14" />
+          <folding>
+            <element signature="n#src#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2204">
+          <caret line="343" lean-forward="true" selection-start-line="343" selection-end-line="343" />
+          <folding>
+            <element signature="e#26#75#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
