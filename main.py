@@ -569,7 +569,7 @@ def addrec():
         con = sql.connect("database.db")
         csv = request.files['myfile']
         file = pd.read_csv(csv)
-        file.to_sql('quake3', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
+        file.to_sql('titanic', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
                     dtype=None)
         con.close()
         return render_template("result.html", msg="Record inserted successfully")
