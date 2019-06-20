@@ -7,8 +7,17 @@
       </header>
       <br> <br>
 {#		 <img src="{{url_for('static',filename='img.png')}}">#}
-      <table>
-          <tr><td>centroids</td><td>{{ kmeansCentroid }}</td></tr>
+      <table border="1">
+          <tr><td>centroids</td></tr>
+            {%  for row in kmeansCentroid %}
+             <tr> <td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+          {% endfor %}
+      </table>
+      <table border="1">
+          <tr><td>distance</td></tr>
+            {%  for row in dist %}
+             <tr> <td>{{ row }}</td></tr>
+          {% endfor %}
       </table>
 {#      <img src="data:image/png;base64,{{ data }}"\>#}
       <img src="data:image/png;base64,{{ data }}" style="margin-left:30%;height:50%;width:50%"\>

@@ -253,6 +253,35 @@ def randomranges():
         print(end_t)
     return render_template("list.html", time=end_t,cache= t)
 
+
+@app.route('/kmeanstitanic1',methods=['GET', 'POST'] )
+def kmeanstitanic1():
+    clustnumber = int(request.form['count'])
+    query = "SELECT fare,age FROM titanic "
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute(query)
+    rows = cur.fetchall()
+    y = pd.DataFrame(rows)
+    X = y.dropna()
+    k = KMeans(n_clusters=clustnumber, random_state=0).fit(X)
+    fig = plt.figure()
+    c = k.cluster_centers_
+    l = k.labels_
+    # plt.scatter(X[0],X[1])
+    plt.scatter(X[0], X[1], c = l)
+    plt.scatter(c[:, 0], c[:, 1], c='y', s=100, marker='x')
+    distance = []
+    for i in range(len(c)):
+        for j in range(len(c)):
+            dist = np.linalg.norm(c[i] - c[j])
+            distance.append((i, j, dist))
+    plt.title('Clusters based on latitude and longitude')
+    plt.xlabel('fare')
+    plt.ylabel('age')
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html",data=plot.decode('utf8'), kmeansCentroid=k.cluster_centers_, dist=distance)
+
 #correct
 @app.route('/clustering')
 def clustering():
