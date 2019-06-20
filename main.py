@@ -574,6 +574,17 @@ def addrec():
         con.close()
         return render_template("result.html", msg="Record inserted successfully")
 
+@app.route('/retrieve', methods=['POST', 'GET'] )
+def retrieve():
+    start_time = time.time()
+    con = sql.connect("database.db")
+    cur = con.cursor()
+    cur.execute("select * from titanic")
+    rows = cur.fetchall();
+    end_time=time.time()-start_time
+    con.close()
+    return render_template("list.html", rows=rows, time=end_time, count=(len(rows)))
+
 
 
 @app.route('/latlat',methods=['POST', 'GET'])
