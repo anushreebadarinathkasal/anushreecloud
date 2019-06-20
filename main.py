@@ -373,7 +373,8 @@ def barhorizontalgraph():
 
     color = ['red', 'green', 'gold', 'blue', 'black']
     for i in range(len(X[0])):
-        plt.bar(X[0][i], X[1][i], color=color[i], width=0.2, align='center', label=X[0][i])
+        # plt.barh(X[0][i], X[1][i], color=color[i], width=0.2, align='center', label=X[0][i])
+        plt.barh(X[0][i], X[1][i], color=color[i],align='center', label=X[0][i])
     plt.legend()
     # plt.barh(X[0],X[1], color =["red","green","blue","yellow"])
     plt.title('Clusters based on NumberOfEarthquakes and magnitude')
