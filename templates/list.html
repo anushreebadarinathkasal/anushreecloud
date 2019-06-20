@@ -5,23 +5,29 @@
     <h1>Anushree Badarinath Kasal</h1>
         <h1>1001624311</h1>
 <h2> <a href = "/">Home</a> </h2>
-      <header> <h1> This page lists the Earthquake records </h1>
+      <header> <h1> This page lists the voting records </h1>
       </header>
       <br> <br>
 
-<p>{{ cache }}</p>
-    <p>{{ time }}</p>
       <table border = 1>
-        <tr><td>time:</td><td>{{ time }}</td></tr>
-        <tr><td>count:</td><td>{{ count }}</td></tr>
-         {% for row in rows %}
-         <tr>
-        {{row}}
+         {% for rows in rows %}
+         <tr><td>
+        {{rows}}
 		<br>
+         </td>
          </tr>
          {% endfor %}
-      <tr><td>with cache</td><td>{{ cc }}</td></tr><br>
-      <tr><td>without cache</td><td>{{ cc1 }}</td></tr><br>
+
+      </table>
+     <table border = 1>
+         {% for rows1 in rows1 %}
+         <tr><td>
+        {{rows1}}
+		<br>
+         </td>
+         </tr>
+         {% endfor %}
+
       </table>
 
       <br>

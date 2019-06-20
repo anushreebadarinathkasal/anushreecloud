@@ -599,21 +599,32 @@ def addrec():
         con = sql.connect("database.db")
         csv = request.files['myfile']
         file = pd.read_csv(csv)
-        file.to_sql('titanic', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
+        file.to_sql('voting', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
                     dtype=None)
         con.close()
         return render_template("result.html", msg="Record inserted successfully")
 
 @app.route('/retrieve', methods=['POST', 'GET'] )
 def retrieve():
-    start_time = time.time()
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select * from titanic")
+    tot1 = int(request.form['tot1']) * 1000
+    print(tot1)
+    tot2 = int(request.form['tot2']) * 1000
+    tot3 = int(request.form['tot3']) * 1000
+    tot4 = int(request.form['tot4']) * 1000
+    cur.execute("select * from voting where TotalPop between " + str(tot1) + " and " + str(tot2))
+    # + " and TotalPop between " + str(tot3) + " and " + str(tot4))
+    # cur.execute("select * from voting where TotalPop >= " + str(tot1) + " and <= " + str(tot2) + " and TotalPop >= " + str(tot3) + " and <= " + str(tot4))
     rows = cur.fetchall();
-    end_time=time.time()-start_time
+    print(rows)
+    cur.execute("select * from voting where TotalPop between " + str(tot3) + " and " + str(tot4))
+    # + " and TotalPop between " + str(tot3) + " and " + str(tot4))
+    # cur.execute("select * from voting where TotalPop >= " + str(tot1) + " and <= " + str(tot2) + " and TotalPop >= " + str(tot3) + " and <= " + str(tot4))
+    rows1 = cur.fetchall();
+    print(rows1)
     con.close()
-    return render_template("list.html", rows=rows, time=end_time, count=(len(rows)))
+    return render_template("list.html", rows=rows, rows1=rows1)
 
 
 
