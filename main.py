@@ -418,37 +418,37 @@ def barhorizontalgraph():
     plot = convert_fig_to_html(fig)
     return render_template("clus.html",data=plot.decode('utf8'))
 
-
-@app.route('/clusteringpiegraph',methods=['POST', 'GET'])
-def clusteringpiegraph():
-    list =[]
-    lables = []
-    result = []
-    totalpop1 = int(request.form['totalpop'])
-    for i in range(totalpop1,30000, 20*1000):
-        query = "SELECT count(*) FROM voting where TotalPop between " + str(totalpop1*100) + " and " + str(totalpop1*100+2000)
-        print(query)
-        con = sql.connect("database.db")
-        cur = con.cursor()
-        cur.execute(query)
-        rows = cur.fetchone()
-        mag_range = str(totalpop1*100)+ "-" +str(totalpop1*100+2000)
-        lables.append(mag_range)
-        # result.append(mag_range)
-        result.append(rows[0])
-            # fig = plt.figure()
-            # plt.pie(result, labels=lables)
-            # plt.show()
-        # list.append(result)
-    # y = pd.DataFrame(list)
-    # X = y.dropna()
-    print(len(lables),len(result))
-    fig = plt.figure()
-    plt.pie(result,labels=lables, autopct='%1.0f%%')
-    plt.legend()
-    plt.title('Clusters')
-    plot = convert_fig_to_html(fig)
-    return render_template("clus.html",data=plot.decode('utf8'))
+#
+# @app.route('/clusteringpiegraph',methods=['POST', 'GET'])
+# def clusteringpiegraph():
+#     list =[]
+#     lables = []
+#     result = []
+#     totalpop1 = int(request.form['totalpop'])
+#     for i in range(totalpop1,30000, 20*1000):
+#         query = "SELECT count(*) FROM voting where TotalPop between " + str(totalpop1*100) + " and " + str(totalpop1*100+2000)
+#         print(query)
+#         con = sql.connect("database.db")
+#         cur = con.cursor()
+#         cur.execute(query)
+#         rows = cur.fetchone()
+#         mag_range = str(totalpop1*100)+ "-" +str(totalpop1*100+2000)
+#         lables.append(mag_range)
+#         # result.append(mag_range)
+#         result.append(rows[0])
+#             # fig = plt.figure()
+#             # plt.pie(result, labels=lables)
+#             # plt.show()
+#         # list.append(result)
+#     # y = pd.DataFrame(list)
+#     # X = y.dropna()
+#     print(len(lables),len(result))
+#     fig = plt.figure()
+#     plt.pie(result,labels=lables, autopct='%1.0f%%')
+#     plt.legend()
+#     plt.title('Clusters')
+#     plot = convert_fig_to_html(fig)
+#     return render_template("clus.html",data=plot.decode('utf8'))
 
 @app.route('/linegraph')
 def linegraph():
@@ -475,28 +475,17 @@ def clusteringhistgraph():
     res = []
     con = sql.connect("database.db")
     cur = con.cursor()
-    cur.execute("select distinct StateName from voting")
+    cur.execute("select mag from Earthquake")
     rows = cur.fetchall()
     row = pd.DataFrame(rows)
     row = row.dropna()
     fig = plt.figure()
-    plt.hist(row[0], bins=52)
-    plt.xlabel('states')
-    plt.ylabel('no in millions')
+    plt.hist(row[0], bins=5)
+    plt.xlabel('mag')
+    plt.ylabel('frequency')
     plot = convert_fig_to_html(fig)
     print(res)
     return render_template('hist.html', data1=plot.decode('utf8'))
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -744,6 +733,126 @@ def delete():
     con.close()
     return render_template("list.html")
 
+@app.route('/clusteringpiegraph',methods = ['POST', 'GET'])
+def clusteringpiegraph():
+    n = int(request.form["num"])
+    main_result = []
+    result = []
+    for i in range(40,80,n):
+        query = "SELECT count(*) FROM voting1 where (Voted*1.0/TotalPop)*100 between "+str(i)+ " and "+str(i+n)
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute(query)
+        rows = cur.fetchone()
+        t = str(i)+ " - "+str(i+n)
+        result.append(t)
+        main_result.append(rows)
+        y = pd.DataFrame(main_result)
+    X = y.dropna()
+    print(X)
+    fig = plt.figure()
+    plt.pie(X[0],labels=result,autopct='%1.0f%%')
+    plt.legend()
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html",data=plot.decode('utf8'))
+
+
+@app.route('/clusteringscattergraph', methods=['POST', 'GET'])
+def clusteringscattergraph():
+    n1 = int(request.form["n1"])
+    n2 = int(request.form["n2"])
+    x = []
+    y = []
+    i = n1
+    for i in range(n2):
+        t = (i * i) + 1
+        x.append(t)
+        y.append(i)
+    fig = plt.figure()
+    plt.plot(x, y, marker='o', color='y', markeredgecolor='b')
+    plt.title('x=(y*y)+1')
+    plt.xlabel('x value')
+    plt.ylabel('y value')
+    plot = convert_fig_to_html(fig)
+    return render_template("clus.html", data=plot.decode('utf8'))
+
+
+@app.route('/clusteringhist', methods=['POST', 'GET'])
+def clusteringhist():
+    count = []
+    lables = []
+    # n = 5000
+    n = int(request.form["n"])
+    for i in np.arange(1000, 30000, n):
+        t = []
+        val1 = i
+        val2 = i + n
+        query = "select count(*) from voting1 where  TotalPop BETWEEN ' " + str(val1) + " 'and ' " + str(val2) + " ' "
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute(query)
+        rows = cur.fetchone()
+        count.append(rows[0])
+        t.append(str(val1) + "-" + str(val2))
+        lables.append(t)
+        fig = plt.figure()
+        y_pos = np.arange(len(lables))
+        color = ['r', 'b', 'g', 'y', 'c', 'b']
+        for i in range(len(count)):
+            plt.bar(y_pos[i], count[i], color=color[i], align='center', label="{0}".format(lables[i]))
+        plt.xticks(y_pos, lables)
+        plt.xlabel('range')
+        plt.title(' TotalPop')
+        plt.ylabel('count')
+        for i, v in enumerate(count):
+            plt.text(i, v, str(v), color='r', fontweight='bold', horizontalalignment='center')
+        plt.legend(numpoints=1)
+        plot = convert_fig_to_html(fig)
+    return render_template("clus.html", data=plot.decode('utf8'))
+
+
+@app.route('/clusterings', methods=['POST', 'GET'])
+def clusterings():
+    count = []
+
+
+    labels_n = []
+    n = 5000
+    for i in np.arange(1000, 30000, n):
+        t = []
+        val1 = i
+        val2 = i + n
+        query = "select count(*) from voting1 where  TotalPop BETWEEN ' " + str(val1) + " 'and ' " + str(val2) + " ' "
+        con = sql.connect("database.db")
+        cur = con.cursor()
+        cur.execute(query)
+        rows = cur.fetchone()
+        count.append(rows[0])
+        t.append(str(val1) + "-" + str(val2))
+        # t.append(str(val2))
+        labels_n.append(t)
+
+        fig = plt.figure()
+        y_pos = np.arange(len(labels_n))
+        # print(y_pos)
+        color = ['r', 'b', 'g', 'y', 'c', 'b']
+        for i in range(len(count)):
+            plt.bar(y_pos[i], count[i], color=color[i], align='center', label="{0}".format(labels_n[i]))
+
+        plt.xticks(y_pos, labels_n)
+        plt.xlabel('range')
+        plt.title(' TotalPop')
+        plt.ylabel('count')
+        # plt.show()
+        for i, v in enumerate(count):
+            plt.text(i, v, str(v), color='r', fontweight='bold', horizontalalignment='center')  # vertical
+        # plt.text(v,i , str(v), color='r', fontweight='bold') horizontal
+        # print(v,i,str(v))
+
+        # plt.legend(numpoints=1)
+        plt.legend()
+        plot = convert_fig_to_html(fig)
+    return render_template("clus.html", data=plot.decode('utf8'))
 
 
 if __name__ == '__main__':
