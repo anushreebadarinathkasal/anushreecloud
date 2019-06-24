@@ -632,7 +632,7 @@ def addrec():
         con = sql.connect("database.db")
         csv = request.files['myfile']
         file = pd.read_csv(csv)
-        file.to_sql('voting', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
+        file.to_sql('voting1', con, schema=None, if_exists='replace', index=True, index_label=None, chunksize=None,
                     dtype=None)
         con.close()
         return render_template("result.html", msg="Record inserted successfully")
@@ -646,7 +646,7 @@ def retrieve():
     tot2 = int(request.form['tot2']) * 1000
     # tot3 = int(request.form['tot3']) * 1000
     # tot4 = int(request.form['tot4']) * 1000
-    cur.execute("select * from voting where TotalPop between " + str(tot1) + " and " + str(tot2))
+    cur.execute("select * from voting1 where TotalPop between " + str(tot1) + " and " + str(tot2))
     # + " and TotalPop between " + str(tot3) + " and " + str(tot4))
     # cur.execute("select * from voting where TotalPop >= " + str(tot1) + " and <= " + str(tot2) + " and TotalPop >= " + str(tot3) + " and <= " + str(tot4))
     rows = cur.fetchall();
